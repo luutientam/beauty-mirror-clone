@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_pro"
+            android:title="Nâng cấp lên PRO"
+            android:icon="@drawable/ic_pro"/>
+        <item
+            android:id="@+id/menu_light"
+            android:title="Đèn gương"
+            android:icon="@drawable/ic_light"/>
+        <item
+            android:id="@+id/menu_frame"
+            android:title="Khung gương"
+            android:icon="@drawable/ic_frame"/>
+        <item
+            android:id="@+id/menu_images"
+            android:title="Hình ảnh của tôi"
+            android:icon="@drawable/ic_images"/>
+        <item
+            android:id="@+id/menu_settings"
+            android:title="Cài đặt"
+            android:icon="@drawable/ic_settings"/>
+    </group>
+</menu>
