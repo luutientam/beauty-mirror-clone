@@ -26,9 +26,12 @@ class MainActivity : AppCompatActivity() {
             binding.drawerLayout.open()
         }
 
-        // Khởi động camera
+    /*    // Khởi động camera
         cameraExecutor = Executors.newSingleThreadExecutor()
         startCamera()
+*/
+
+
         // Điều chỉnh độ sáng
         binding.brightnessSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
 
@@ -49,7 +52,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    private fun startCamera() {
+  /*  private fun startCamera() {
         val cameraProviderFuture = ProcessCameraProvider.getInstance(this)
         cameraProviderFuture.addListener({
             val cameraProvider = cameraProviderFuture.get()
@@ -59,7 +62,7 @@ class MainActivity : AppCompatActivity() {
             val cameraSelector = CameraSelector.DEFAULT_FRONT_CAMERA
             cameraProvider.bindToLifecycle(this, cameraSelector, preview)
         }, ContextCompat.getMainExecutor(this))
-    }
+    }*/
 
     override fun onDestroy() {
         super.onDestroy()

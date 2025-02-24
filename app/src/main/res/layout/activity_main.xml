@@ -8,50 +8,83 @@
     tools:context=".MainActivity">
 
   <!-- Camera Preview -->
-  <androidx.constraintlayout.widget.ConstraintLayout
-      android:layout_width="match_parent"
-      android:layout_height="match_parent">
 
-    <androidx.camera.view.PreviewView
+    <!-- Menu bên trái -->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+<!--            <androidx.camera.view.PreviewView
         android:id="@+id/previewView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        tools:visibility="gone"/>-->
 
-    <!-- Thanh điều chỉnh độ sáng -->
-    <SeekBar
-        android:id="@+id/brightnessSeekBar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:max="100"
-        android:progress="50"
-        android:thumbTint="@android:color/white"
-        android:progressTint="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginBottom="20dp"/>
 
-    <!-- Nút mở menu -->
-    <ImageButton
-        android:id="@+id/menuButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="?attr/selectableItemBackground"
-        android:src="@drawable/ic_menu"
-        android:padding="10dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_margin="16dp"/>
-  </androidx.constraintlayout.widget.ConstraintLayout>
+        <!-- Thanh điều chỉnh độ sáng -->
 
-  <!-- Menu bên trái -->
-  <com.google.android.material.navigation.NavigationView
+
+
+        <SeekBar
+            android:id="@+id/brightnessSeekBar"
+            android:layout_width="294dp"
+            android:layout_height="72dp"
+            android:layout_marginBottom="152dp"
+            android:background="@android:color/transparent"
+            android:max="100"
+            android:progress="50"
+            android:progressBackgroundTint="#33FFFFFF"
+            android:progressTint="#99FFFFFF"
+            android:scaleY="2"
+            android:thumbTint="@android:color/transparent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.495"
+            app:layout_constraintStart_toStartOf="parent" />
+
+
+        <!-- Nút mở menu -->
+
+        <ImageButton
+            android:id="@+id/menuButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:background="?attr/selectableItemBackground"
+            android:contentDescription="Nút mở menu"
+            android:padding="10dp"
+            android:src="@drawable/ic_menu"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/nutDungAnh"
+            android:layout_width="95dp"
+            android:layout_height="60dp"
+            android:layout_marginEnd="128dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.9" />
+
+        <Button
+            android:id="@+id/nutDenVien"
+            android:layout_width="95dp"
+            android:layout_height="60dp"
+            android:layout_marginStart="120dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.9"
+            tools:ignore="UnknownId" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.navigation.NavigationView
       android:id="@+id/navigationView"
       android:layout_width="wrap_content"
       android:layout_height="match_parent"
       android:layout_gravity="start"
       android:background="@android:color/white"
       app:menu="@menu/menu_items"/>
-
-
 </androidx.drawerlayout.widget.DrawerLayout>
