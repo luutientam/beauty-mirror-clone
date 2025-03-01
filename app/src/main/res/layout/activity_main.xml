@@ -7,22 +7,45 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-  <!-- Camera Preview -->
+
+
+
 
     <!-- Menu bên trái -->
+
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint_layout_vuot"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-               <androidx.camera.view.PreviewView
+
+        <ImageView
+            android:id="@+id/capturedImageView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitCenter"
+            android:visibility="gone" />
+
+        <!-- Camera Preview -->
+                       <androidx.camera.view.PreviewView
         android:id="@+id/previewView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:visibility="gone"/>
 
-              Thanh điều chỉnh độ sáng
+        <!-- Khung gương -->
+                    <ImageView
+                android:id="@+id/frameOverlay"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitCenter"
+                android:visibility="gone" />
+
+        <!-- Mặc định ẩn khung -->
+
+
+        <!-- Thanh điều chỉnh độ sáng-->
 
         <SeekBar
             android:id="@+id/brightnessSeekBar"
@@ -34,8 +57,9 @@
             android:progress="50"
             android:progressBackgroundTint="#33FFFFFF"
             android:progressTint="#99FFFFFF"
-            android:scaleY="2"
-            android:thumbTint="@android:color/transparent"
+            android:scaleY="1"
+            android:thumb="@drawable/sun"
+            android:thumbTint="@null"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.495"
@@ -48,18 +72,20 @@
             android:layout_width="236dp"
             android:layout_height="63dp"
             android:layout_gravity="center"
-            android:layout_marginBottom="372dp"
             android:layout_marginEnd="5dp"
-        android:max="100"
-        android:progress="0"
-        android:progressBackgroundTint="#33FFFFFF"
-        android:progressTint="#FFFFFF"
-        android:rotation="270"
-        android:thumbTint="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.2"
-        app:layout_constraintStart_toStartOf="parent" />
+            android:layout_marginBottom="372dp"
+            android:max="100"
+            android:progress="0"
+            android:progressBackgroundTint="#33FFFFFF"
+            android:progressTint="#FFFFFF"
+            android:rotation="270"
+            android:thumb="@drawable/zoom"
+            android:thumbTint="@null"
+
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="1.2"
+            app:layout_constraintStart_toStartOf="parent" />
 
 
         <!-- Nút mở menu -->
@@ -81,26 +107,47 @@
         <ImageButton
             android:id="@+id/nutDungAnh"
             android:layout_width="95dp"
-            android:layout_height="60dp"
-            android:layout_marginEnd="128dp"
+            android:layout_height="95dp"
+            android:layout_marginStart="120dp"
+            android:background="@drawable/rounded_button"
+            android:src="@drawable/tuyet"
+            android:scaleType="centerInside"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.9" />
+            app:layout_constraintVertical_bias="0.912" />
 
         <ImageButton
             android:id="@+id/nutDenVien"
             android:layout_width="95dp"
-            android:layout_height="60dp"
-            android:layout_marginStart="120dp"
+            android:layout_height="95dp"
+            android:layout_marginEnd="120dp"
+            android:background="@drawable/rounded_button"
+            android:scaleType="centerInside"
+            android:src="@drawable/bulb"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.9"
+            app:layout_constraintVertical_bias="0.912"
             tools:ignore="UnknownId" />
 
+
+
+        <ImageView
+            android:id="@+id/nutLuuAnh"
+            android:layout_width="95dp"
+            android:layout_height="95dp"
+            android:layout_marginEnd="120dp"
+            android:src="@drawable/memory_card"
+            android:background="@drawable/rounded_button"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.912"
+            app:srcCompat="@drawable/ic_launcher_background" />
+
         <ImageButton
-            android:id="@+id/imageButton"
+            android:id="@+id/xemAnhDaChup"
             android:layout_width="58dp"
             android:layout_height="51dp"
             android:layout_marginStart="16dp"
@@ -110,16 +157,14 @@
             tools:srcCompat="@tools:sample/avatars" />
 
         <ImageButton
-            android:id="@+id/imageButton2"
+            android:id="@+id/chonKhung"
             android:layout_width="54dp"
             android:layout_height="52dp"
             android:layout_marginStart="16dp"
             android:layout_marginTop="28dp"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/imageButton"
-            app:srcCompat="@drawable/den_thanh_keo" />
-
-
+            app:layout_constraintTop_toBottomOf="@+id/xemAnhDaChup"
+            app:srcCompat="@drawable/sun" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
