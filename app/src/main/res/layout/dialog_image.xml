@@ -3,12 +3,4 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/frameItem"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:scaleType="fitCenter"
-        android:padding="8dp" />
-
 </androidx.constraintlayout.widget.ConstraintLayout>
