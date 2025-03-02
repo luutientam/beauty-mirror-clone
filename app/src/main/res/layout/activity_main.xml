@@ -24,7 +24,7 @@
             android:visibility="gone" />
 
         <!-- Camera Preview -->
-                       <androidx.camera.view.PreviewView
+                                       <androidx.camera.view.PreviewView
         android:id="@+id/previewView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -35,11 +35,11 @@
             android:id="@+id/denVienOverlay"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/den_vien"
-            android:visibility="gone"
-            android:scaleType="fitCenter"
             android:alpha="1.0"
-            android:background="@android:color/transparent"/>
+            android:background="@android:color/transparent"
+            android:scaleType="fitCenter"
+            android:src="@drawable/den_vien_1"
+            android:visibility="gone" />
 
         <!-- Mặc định ẩn khung -->
 
@@ -89,14 +89,14 @@
 
         <!-- Nút mở menu -->
 
+
         <ImageButton
             android:id="@+id/menuButton"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_margin="16dp"
+            android:layout_width="58dp"
+            android:layout_height="65dp"
             android:layout_marginStart="16dp"
-            android:layout_marginTop="16dp"
-            android:background="?attr/selectableItemBackground"
+            android:layout_marginTop="120dp"
+            android:background="@drawable/rounded_button"
             android:contentDescription="Nút mở menu"
             android:padding="10dp"
             android:src="@drawable/ic_menu"
@@ -104,13 +104,36 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
+            android:id="@+id/xemAnhDaChup"
+            android:layout_width="58dp"
+            android:layout_height="65dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="48dp"
+            android:background="@drawable/rounded_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/menuButton"
+            app:srcCompat="@drawable/anh_da_chup" />
+
+        <ImageButton
+            android:id="@+id/chonKhung"
+            android:layout_width="58dp"
+            android:layout_height="65dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="48dp"
+            android:background="@drawable/rounded_button"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/xemAnhDaChup"
+            app:srcCompat="@drawable/khung_guong" />
+
+
+        <ImageButton
             android:id="@+id/nutDungAnh"
             android:layout_width="95dp"
             android:layout_height="95dp"
             android:layout_marginStart="120dp"
             android:background="@drawable/rounded_button"
-            android:src="@drawable/bong_tuyet"
             android:scaleType="centerInside"
+            android:src="@drawable/bong_tuyet"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -131,41 +154,21 @@
             tools:ignore="UnknownId" />
 
 
-
         <ImageView
             android:id="@+id/nutLuuAnh"
             android:layout_width="95dp"
             android:layout_height="95dp"
             android:layout_marginEnd="120dp"
-            android:src="@drawable/luu_anh"
+            android:background="@drawable/rounded_button"
             android:scaleType="centerInside"
 
-            android:background="@drawable/rounded_button"
+            android:src="@drawable/luu_anh"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintVertical_bias="0.912"
             app:srcCompat="@drawable/ic_launcher_background" />
 
-        <ImageButton
-            android:id="@+id/xemAnhDaChup"
-            android:layout_width="58dp"
-            android:layout_height="51dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="24dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/menuButton"
-            tools:srcCompat="@tools:sample/avatars" />
-
-        <ImageButton
-            android:id="@+id/chonKhung"
-            android:layout_width="54dp"
-            android:layout_height="52dp"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="28dp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/xemAnhDaChup"
-            app:srcCompat="@drawable/sun" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -175,5 +178,7 @@
       android:layout_height="match_parent"
       android:layout_gravity="start"
       android:background="@android:color/white"
+        app:itemIconTint="@color/black"
+      app:itemTextColor="@color/black"
       app:menu="@menu/menu_items"/>
 </androidx.drawerlayout.widget.DrawerLayout>

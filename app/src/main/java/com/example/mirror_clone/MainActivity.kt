@@ -1,11 +1,14 @@
 package com.example.mirror_clone
 
+import GalleryBottomSheet
 import android.animation.ObjectAnimator
-import android.annotation.SuppressLint
 import android.content.ContentValues
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -16,18 +19,23 @@ import android.view.View
 import android.widget.SeekBar
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.camera.core.*
+import androidx.camera.core.Camera
+import androidx.camera.core.CameraControl
+import androidx.camera.core.CameraSelector
+import androidx.camera.core.ImageCapture
+import androidx.camera.core.ImageCaptureException
+import androidx.camera.core.ImageProxy
+import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.animation.doOnEnd
 import androidx.core.content.ContextCompat
 import com.example.mirror_clone.databinding.ActivityMainBinding
-import java.io.File
 import java.io.OutputStream
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
-import android.graphics.PorterDuff
-import android.graphics.PorterDuffColorFilter
 
+
+@Suppress("DEPRECATION")
 class MainActivity : AppCompatActivity() {
     // Khai báo các biến và đối tượng cần thiết
     private lateinit var binding: ActivityMainBinding // Binding để kết nối với layout
@@ -40,7 +48,7 @@ class MainActivity : AppCompatActivity() {
     private val handler = Handler(Looper.getMainLooper()) // Handler để xử lý các tác vụ trên luồng chính
     private val hideUIRunnable = Runnable { hideAllButtons() } // Runnable để ẩn các nút UI
     private var lastFrameBitmap: Bitmap? = null // Bitmap để lưu trữ frame cuối cùng
-
+    private val capturedImages = ArrayList<Uri>() // Danh sách lưu ảnh đã chụp
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater) // Khởi tạo binding
@@ -90,6 +98,33 @@ class MainActivity : AppCompatActivity() {
                 binding.nutDenVien.setColorFilter(ContextCompat.getColor(this, R.color.yellow))
             }
         }
+        // Thiết lập sự kiện click cho nút xem ảnh đã chụp
+        binding.xemAnhDaChup    .setOnClickListener {
+            if (capturedImages.isNotEmpty()) {
+                val bottomSheet = GalleryBottomSheet(capturedImages)
+                bottomSheet.show(supportFragmentManager, "GalleryBottomSheet")
+            } else {
+                Toast.makeText(this, "Chưa có ảnh nào!", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
+        //chọn khung
+/*        binding.chonKhung.setOnClickListener {
+            val bottomSheet = BottomSheetChonKhung()
+            bottomSheet.show(supportFragmentManager, "BottomSheetChonKhung")
+        }
+
+
+        fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+            super.onActivityResult(requestCode, resultCode, data)
+            if (requestCode == 100 && resultCode == RESULT_OK) {
+                val khungId = data?.getIntExtra("KHUNG_DA_CHON", 0) ?: return
+                binding.denVienOverlay.setImageResource(khungId)
+                binding.denVienOverlay.visibility = View.VISIBLE
+            }
+        }*/
+
 
 
         // Thiết lập sự kiện thay đổi giá trị cho SeekBar điều chỉnh độ sáng
@@ -142,13 +177,15 @@ class MainActivity : AppCompatActivity() {
         imageUri?.let { uri ->
             val outputStream: OutputStream? = contentResolver.openOutputStream(uri)
             outputStream?.use { stream ->
-                bitmap?.compress(Bitmap.CompressFormat.JPEG, 100, stream)
-                Toast.makeText(this@MainActivity, "Lưu ảnh thành công!", Toast.LENGTH_SHORT).show()
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+                capturedImages.add(uri) // Lưu URI vào danh sách
+                Toast.makeText(this, "Lưu ảnh thành công!", Toast.LENGTH_SHORT).show()
             } ?: run {
-                Toast.makeText(this@MainActivity, "Lưu ảnh thất bại!", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Lưu ảnh thất bại!", Toast.LENGTH_SHORT).show()
             }
-        } ?: Toast.makeText(this@MainActivity, "imageUri rỗng!", Toast.LENGTH_SHORT).show()
+        } ?: Toast.makeText(this, "imageUri rỗng!", Toast.LENGTH_SHORT).show()
     }
+
 
     // Hàm điều chỉnh độ sáng màn hình
     private fun setScreenBrightness(brightness: Float) {

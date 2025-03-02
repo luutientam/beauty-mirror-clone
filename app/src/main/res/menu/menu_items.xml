@@ -2,24 +2,34 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/menu_pro"
+            android:id="@+id/ic_pro"
             android:title="Nâng cấp lên PRO"
-            android:icon="@drawable/ic_pro"/>
+            android:icon="@drawable/ic_pro"
+            android:iconSpaceReserved="false"/>
         <item
             android:id="@+id/menu_light"
             android:title="Đèn gương"
-            android:icon="@drawable/bong_tuyet"/>
+            android:icon="@drawable/bong_den"
+            android:iconSpaceReserved="false"/>
         <item
             android:id="@+id/menu_frame"
             android:title="Khung gương"
-            android:icon="@drawable/ic_frame"/>
+            android:icon="@drawable/khung_guong"
+            android:iconSpaceReserved="false"/>
         <item
             android:id="@+id/menu_images"
             android:title="Hình ảnh của tôi"
-            android:icon="@drawable/ic_images"/>
+            android:icon="@drawable/anh_da_chup"
+            android:iconSpaceReserved="false"/>
+        <item
+            android:id="@+id/menu_more_apps"
+            android:title="Thêm nhiều ứng dụng 🔥"
+            android:icon="@drawable/sun"
+            android:iconSpaceReserved="false"/>
         <item
             android:id="@+id/menu_settings"
             android:title="Cài đặt"
-            android:icon="@drawable/ic_settings"/>
+            android:icon="@drawable/ic_seting"
+            android:iconSpaceReserved="false"/>
     </group>
 </menu>
