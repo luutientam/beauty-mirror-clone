@@ -8,7 +8,7 @@
         <item
             android:id="@+id/menu_light"
             android:title="Đèn gương"
-            android:icon="@drawable/ic_light"/>
+            android:icon="@drawable/bong_tuyet"/>
         <item
             android:id="@+id/menu_frame"
             android:title="Khung gương"

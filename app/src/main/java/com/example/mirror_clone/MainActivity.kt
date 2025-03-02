@@ -25,6 +25,8 @@ import java.io.File
 import java.io.OutputStream
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
+import android.graphics.PorterDuff
+import android.graphics.PorterDuffColorFilter
 
 class MainActivity : AppCompatActivity() {
     // Khai báo các biến và đối tượng cần thiết
@@ -76,6 +78,19 @@ class MainActivity : AppCompatActivity() {
                 saveImageToGallery(bitmap)
             }
         }
+// // Thiết lập sự kiện click cho nút đèn viền
+        binding.nutDenVien.setOnClickListener {
+            val isActive = binding.denVienOverlay.visibility == View.VISIBLE
+
+            if (isActive) {
+                binding.denVienOverlay.visibility = View.GONE
+                binding.nutDenVien.setColorFilter(ContextCompat.getColor(this, android.R.color.darker_gray))
+            } else {
+                binding.denVienOverlay.visibility = View.VISIBLE
+                binding.nutDenVien.setColorFilter(ContextCompat.getColor(this, R.color.yellow))
+            }
+        }
+
 
         // Thiết lập sự kiện thay đổi giá trị cho SeekBar điều chỉnh độ sáng
         binding.brightnessSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
@@ -216,6 +231,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Hàm chuyển đổi trạng thái camera
+
+
     private fun toggleCamera() {
         if (isCameraActive) {
             // Chụp frame cuối cùng và hiển thị
@@ -230,15 +247,25 @@ class MainActivity : AppCompatActivity() {
             hideAllButtons()
             binding.nutDungAnh.visibility = View.VISIBLE
             binding.nutLuuAnh.visibility = View.VISIBLE
+
+            // Đổi màu bông tuyết khi dừng
+            binding.nutDungAnh.colorFilter = PorterDuffColorFilter(
+                ContextCompat.getColor(this, R.color.light_blue), // Chọn màu mong muốn
+                PorterDuff.Mode.SRC_IN
+            )
         } else {
             // Nếu nhấn nút dừng lần 2 thì reset về ban đầu
             resetToInitialState()
             startHideTimer()
+
+            // Khôi phục màu gốc
+            binding.nutDungAnh.colorFilter = null
         }
 
         // Đảo trạng thái camera
         isCameraActive = !isCameraActive
     }
+
 
     // Hàm ẩn tất cả các nút
     private fun hideAllButtons() {
