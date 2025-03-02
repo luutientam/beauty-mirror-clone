@@ -7,10 +7,6 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-
-
-
-
     <!-- Menu bên trái -->
 
 
@@ -35,12 +31,15 @@
         tools:visibility="gone"/>
 
         <!-- Khung gương -->
-                    <ImageView
-                android:id="@+id/frameOverlay"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:scaleType="fitCenter"
-                android:visibility="gone" />
+        <ImageView
+            android:id="@+id/denVienOverlay"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/den_vien"
+            android:visibility="gone"
+            android:scaleType="fitCenter"
+            android:alpha="1.0"
+            android:background="@android:color/transparent"/>
 
         <!-- Mặc định ẩn khung -->
 
@@ -110,7 +109,7 @@
             android:layout_height="95dp"
             android:layout_marginStart="120dp"
             android:background="@drawable/rounded_button"
-            android:src="@drawable/tuyet"
+            android:src="@drawable/bong_tuyet"
             android:scaleType="centerInside"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -124,7 +123,7 @@
             android:layout_marginEnd="120dp"
             android:background="@drawable/rounded_button"
             android:scaleType="centerInside"
-            android:src="@drawable/bulb"
+            android:src="@drawable/bong_den"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -138,7 +137,9 @@
             android:layout_width="95dp"
             android:layout_height="95dp"
             android:layout_marginEnd="120dp"
-            android:src="@drawable/memory_card"
+            android:src="@drawable/luu_anh"
+            android:scaleType="centerInside"
+
             android:background="@drawable/rounded_button"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
