@@ -126,6 +126,18 @@ class MainActivity() : AppCompatActivity(), Parcelable {
                 saveImageToGallery(bitmap)
             }
         }
+        // Thiết lập sự kiện click cho nút xem ảnh đã chụp
+        binding.xemAnhDaChup.setOnClickListener {
+            if (capturedImages.isNotEmpty()) {
+                val bottomSheet = GalleryBottomSheet(capturedImages)
+                bottomSheet.show(supportFragmentManager, "com.example.mirror_clone.ui.GalleryBottomSheet")
+            } else {
+                Toast.makeText(this, "Chưa có ảnh nào!", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+
+
 // // Thiết lập sự kiện click cho nút đèn viền
         binding.nutDenVien.setOnClickListener {
             val isActive = binding.denVienOverlay.visibility == View.VISIBLE
@@ -139,35 +151,12 @@ class MainActivity() : AppCompatActivity(), Parcelable {
             }
         }
 
-        // Thiết lập sự kiện click cho nút xem ảnh đã chụp
-        binding.xemAnhDaChup    .setOnClickListener {
-            if (capturedImages.isNotEmpty()) {
-                val bottomSheet = GalleryBottomSheet(capturedImages)
-                bottomSheet.show(supportFragmentManager, "com.example.mirror_clone.ui.GalleryBottomSheet")
-            } else {
-                Toast.makeText(this, "Chưa có ảnh nào!", Toast.LENGTH_SHORT).show()
-            }
+
+        // Thiết lập sự kiện click cho nút chọn khung
+        binding.chonKhung.setOnClickListener {
+            binding.drawerLayout.close()
+            resetHideTimer()
         }
-
-
-        //chọn khung
-/*        binding.chonKhung.setOnClickListener {
-            val bottomSheet = BottomSheetChonKhung()
-            bottomSheet.show(supportFragmentManager, "BottomSheetChonKhung")
-        }
-
-
-        fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-            super.onActivityResult(requestCode, resultCode, data)
-            if (requestCode == 100 && resultCode == RESULT_OK) {
-                val khungId = data?.getIntExtra("KHUNG_DA_CHON", 0) ?: return
-                binding.denVienOverlay.setImageResource(khungId)
-                binding.denVienOverlay.visibility = View.VISIBLE
-            }
-        }*/
-
-
-
         // Thiết lập sự kiện thay đổi giá trị cho SeekBar điều chỉnh độ sáng
         binding.brightnessSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
@@ -205,26 +194,28 @@ class MainActivity() : AppCompatActivity(), Parcelable {
     }
 
     // Hàm lưu ảnh vào thư viện
+
     private fun saveImageToGallery(bitmap: Bitmap) {
         val contentValues = ContentValues().apply {
-            put(MediaStore.Images.Media.DISPLAY_NAME, "mirror_${System.currentTimeMillis()}.jpg")
+            put(MediaStore.Images.Media.DISPLAY_NAME, "Mirror_${System.currentTimeMillis()}.jpg")
             put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
-            put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/MirrorClone")
         }
 
-        val contentResolver = contentResolver
-        val imageUri = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
+        val uri: Uri? = contentResolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, contentValues)
 
-        imageUri?.let { uri ->
-            val outputStream: OutputStream? = contentResolver.openOutputStream(uri)
-            outputStream?.use { stream ->
-                bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
-                capturedImages.add(uri) // Lưu URI vào danh sách
-                Toast.makeText(this, "Lưu ảnh thành công!", Toast.LENGTH_SHORT).show()
-            } ?: run {
-                Toast.makeText(this, "Lưu ảnh thất bại!", Toast.LENGTH_SHORT).show()
+        uri?.let {
+            try {
+                val outputStream: OutputStream? = contentResolver.openOutputStream(it)
+                if (outputStream != null) {
+                    bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
+                }
+                outputStream?.close()
+                capturedImages.add(it) // Thêm ảnh vào danh sách đã chụp
+                Toast.makeText(this, "Đã lưu ảnh vào thư viện!", Toast.LENGTH_SHORT).show()
+            } catch (e: Exception) {
+                Log.e("CameraX", "Lỗi khi lưu ảnh: ${e.message}", e)
             }
-        } ?: Toast.makeText(this, "imageUri rỗng!", Toast.LENGTH_SHORT).show()
+        }
     }
 
 
@@ -279,9 +270,10 @@ class MainActivity() : AppCompatActivity(), Parcelable {
     }
 
     // Hàm xoay ảnh
-    private fun Bitmap.rotate(degrees: Int): Bitmap {
+
+    private fun Bitmap.rotate(degree: Int): Bitmap {
         val matrix = Matrix()
-        matrix.postRotate(degrees.toFloat())
+        matrix.postRotate(degree.toFloat())
         return Bitmap.createBitmap(this, 0, 0, width, height, matrix, true)
     }
 
