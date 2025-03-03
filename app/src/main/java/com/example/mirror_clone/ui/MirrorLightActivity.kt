@@ -1,9 +1,10 @@
-package com.example.mirror_clone
+package com.example.mirror_clone.ui
 
-import MirrorLight
-import MirrorLightAdapter
+import com.example.mirror_clone.models.MirrorLight
+import com.example.mirror_clone.adapters.MirrorLightAdapter
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.example.mirror_clone.R
 import com.example.mirror_clone.databinding.ActivityMirrorLightBinding
 
 class MirrorLightActivity : AppCompatActivity() {
@@ -14,8 +15,8 @@ class MirrorLightActivity : AppCompatActivity() {
         MirrorLight(R.drawable.den_vien_1, false),
         MirrorLight(R.drawable.den_vien_2, false),
         MirrorLight(R.drawable.den_vien_3, true),
-        /*MirrorLight(R.drawable.light_4, true),
-        MirrorLight(R.drawable.light_5, false)*/
+        /*com.example.mirror_clone.models.MirrorLight(R.drawable.light_4, true),
+        com.example.mirror_clone.models.MirrorLight(R.drawable.light_5, false)*/
     )
 
     override fun onCreate(savedInstanceState: Bundle?) {
