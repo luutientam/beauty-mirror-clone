@@ -1,4 +1,4 @@
-
+package com.example.mirror_clone.adapters
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -7,6 +7,7 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.RadioButton
 import com.example.mirror_clone.R
+import com.example.mirror_clone.models.MirrorLight
 
 class MirrorLightAdapter(private val context: Context, private val lights: List<MirrorLight>) : BaseAdapter() {
 

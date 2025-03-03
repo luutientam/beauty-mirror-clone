@@ -1,3 +1,5 @@
+package com.example.mirror_clone.adapters
+
 import android.app.Dialog
 import android.content.Context
 import android.content.Intent

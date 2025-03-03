@@ -1,8 +1,8 @@
 package com.example.mirror_clone
 
-import GalleryBottomSheet
 import android.animation.ObjectAnimator
 import android.content.ContentValues
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.graphics.Matrix
@@ -12,6 +12,8 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.os.Parcel
+import android.os.Parcelable
 import android.provider.MediaStore
 import android.util.Log
 import android.view.MotionEvent
@@ -28,15 +30,17 @@ import androidx.camera.core.ImageProxy
 import androidx.camera.core.Preview
 import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.animation.doOnEnd
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.example.mirror_clone.databinding.ActivityMainBinding
+import com.example.mirror_clone.ui.GalleryBottomSheet
 import java.io.OutputStream
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
 
 
 @Suppress("DEPRECATION")
-class MainActivity : AppCompatActivity() {
+class MainActivity() : AppCompatActivity(), Parcelable {
     // Khai báo các biến và đối tượng cần thiết
     private lateinit var binding: ActivityMainBinding // Binding để kết nối với layout
     private lateinit var cameraExecutor: ExecutorService // ExecutorService để xử lý các tác vụ camera
@@ -49,10 +53,46 @@ class MainActivity : AppCompatActivity() {
     private val hideUIRunnable = Runnable { hideAllButtons() } // Runnable để ẩn các nút UI
     private var lastFrameBitmap: Bitmap? = null // Bitmap để lưu trữ frame cuối cùng
     private val capturedImages = ArrayList<Uri>() // Danh sách lưu ảnh đã chụp
+    private val REQUEST_CAMERA_PERMISSION = 1001
+    constructor(parcel: Parcel) : this() {
+        isCameraActive = parcel.readByte() != 0.toByte()
+        lastFrameBitmap = parcel.readParcelable(Bitmap::class.java.classLoader)
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater) // Khởi tạo binding
         setContentView(binding.root) // Đặt layout cho activity
+
+        //kiểm tra và yêu cầu quyền truy cập camera
+
+
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.CAMERA
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(android.Manifest.permission.CAMERA),
+                REQUEST_CAMERA_PERMISSION
+            )
+        } else {
+            startCamera()
+        }
+        //kiểm tra và yêu cầu quyền truy cập bộ nhớ
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(android.Manifest.permission.WRITE_EXTERNAL_STORAGE),
+                REQUEST_CAMERA_PERMISSION
+            )
+        }
+
 
         // Thiết lập sự kiện chạm để hiển thị các nút khi chạm vào màn hình
         binding.constraintLayoutVuot.setOnTouchListener { _, event ->
@@ -98,11 +138,12 @@ class MainActivity : AppCompatActivity() {
                 binding.nutDenVien.setColorFilter(ContextCompat.getColor(this, R.color.yellow))
             }
         }
+
         // Thiết lập sự kiện click cho nút xem ảnh đã chụp
         binding.xemAnhDaChup    .setOnClickListener {
             if (capturedImages.isNotEmpty()) {
                 val bottomSheet = GalleryBottomSheet(capturedImages)
-                bottomSheet.show(supportFragmentManager, "GalleryBottomSheet")
+                bottomSheet.show(supportFragmentManager, "com.example.mirror_clone.ui.GalleryBottomSheet")
             } else {
                 Toast.makeText(this, "Chưa có ảnh nào!", Toast.LENGTH_SHORT).show()
             }
@@ -358,5 +399,24 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         cameraExecutor.shutdown()
+    }
+
+    override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeByte(if (isCameraActive) 1 else 0)
+        parcel.writeParcelable(lastFrameBitmap, flags)
+    }
+
+    override fun describeContents(): Int {
+        return 0
+    }
+
+    companion object CREATOR : Parcelable.Creator<MainActivity> {
+        override fun createFromParcel(parcel: Parcel): MainActivity {
+            return MainActivity(parcel)
+        }
+
+        override fun newArray(size: Int): Array<MainActivity?> {
+            return arrayOfNulls(size)
+        }
     }
 }
