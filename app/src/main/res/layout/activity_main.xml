@@ -8,8 +8,6 @@
     tools:context=".MainActivity">
 
     <!-- Menu bên trái -->
-
-    <!--ok -->
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraint_layout_vuot"
         android:layout_width="match_parent"
