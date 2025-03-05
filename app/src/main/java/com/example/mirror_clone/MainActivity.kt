@@ -32,8 +32,10 @@ import androidx.camera.lifecycle.ProcessCameraProvider
 import androidx.core.animation.doOnEnd
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.example.mirror_clone.databinding.ActivityMainBinding
 import com.example.mirror_clone.ui.GalleryBottomSheet
+import com.example.mirror_clone.ui.KhungFragment
 import java.io.OutputStream
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -65,7 +67,6 @@ class MainActivity() : AppCompatActivity(), Parcelable {
         setContentView(binding.root) // Đặt layout cho activity
 
         //kiểm tra và yêu cầu quyền truy cập camera
-
 
         if (ActivityCompat.checkSelfPermission(
                 this,
@@ -110,6 +111,12 @@ class MainActivity() : AppCompatActivity(), Parcelable {
             toggleCamera()
         }
 
+        // Thiết lập sự kiện click cho nút chọn khung
+
+        binding.chonKhung.setOnClickListener {
+            replaceFragment(KhungFragment())
+        }
+
         // Thiết lập sự kiện click cho nút menu
         binding.menuButton.setOnClickListener {
             binding.drawerLayout.open()
@@ -135,10 +142,7 @@ class MainActivity() : AppCompatActivity(), Parcelable {
                 Toast.makeText(this, "Chưa có ảnh nào!", Toast.LENGTH_SHORT).show()
             }
         }
-
-
-
-// // Thiết lập sự kiện click cho nút đèn viền
+        // Thiết lập sự kiện click cho nút đèn viền
         binding.nutDenVien.setOnClickListener {
             val isActive = binding.denVienOverlay.visibility == View.VISIBLE
 
@@ -152,11 +156,7 @@ class MainActivity() : AppCompatActivity(), Parcelable {
         }
 
 
-        // Thiết lập sự kiện click cho nút chọn khung
-        binding.chonKhung.setOnClickListener {
-            binding.drawerLayout.close()
-            resetHideTimer()
-        }
+
         // Thiết lập sự kiện thay đổi giá trị cho SeekBar điều chỉnh độ sáng
         binding.brightnessSeekBar.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(seekBar: SeekBar, progress: Int, fromUser: Boolean) {
@@ -193,6 +193,14 @@ class MainActivity() : AppCompatActivity(), Parcelable {
         startHideTimer() // Bắt đầu đếm thời gian để ẩn các nút UI
     }
 
+    // ham thay fragment
+    private fun replaceFragment(fragment: Fragment) {
+        supportFragmentManager.beginTransaction()
+            .setCustomAnimations(R.anim.slide_in_left, R.anim.slide_out_right)
+            .replace(R.id.fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
+    }
     // Hàm lưu ảnh vào thư viện
 
     private fun saveImageToGallery(bitmap: Bitmap) {
