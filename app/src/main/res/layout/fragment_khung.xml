@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragment_khung"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+
+    <!-- Thêm các phần tử UI để chọn khung ở đây -->
+    <!-- Khung gương -->
+    <ImageView
+        android:id="@+id/khungGuongOverlay_1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="1.0"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        android:src="@drawable/khung_guong"
+        android:visibility="gone" />
+
+    <ImageView
+        android:id="@+id/khungGuongOverlay_2"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="1.0"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        android:src="@drawable/khung_guong"
+        android:visibility="gone" />
+    <ImageView
+        android:id="@+id/khungGuongOverlay_3"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="1.0"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        android:src="@drawable/khung_guong"
+        android:visibility="gone" />
+    <ImageView
+        android:id="@+id/khungGuongOverlay_4"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="1.0"
+        android:background="@android:color/transparent"
+        android:scaleType="fitCenter"
+        android:src="@drawable/khung_guong"
+        android:visibility="gone" />
+</androidx.constraintlayout.widget.ConstraintLayout>
